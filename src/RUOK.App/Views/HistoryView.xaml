@@ -1,0 +1,60 @@
+<UserControl
+    x:Class="RUOK_App.Views.HistoryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:RUOK_App.Resources"
+    xmlns:vm="using:RUOK_App.ViewModels"
+    xmlns:controls="using:RUOK_App.Controls">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Spacing="24" Margin="28,20,28,32" MaxWidth="1040" HorizontalAlignment="Stretch">
+            <StackPanel Spacing="8">
+                <TextBlock Text="{x:Bind ui:UiText.Get('HistoryTitle')}" Style="{StaticResource PageHeading}" />
+                <TextBlock Text="{x:Bind ui:UiText.Get('HistorySubtitle')}" Style="{StaticResource BodyCopy}" />
+            </StackPanel>
+            <Border Style="{StaticResource SurfaceCard}">
+                <StackPanel Spacing="14">
+                    <ComboBox Header="{x:Bind ui:UiText.Get('PeriodLabel')}" ItemsSource="{x:Bind ViewModel.Periods}"
+                              SelectedItem="{x:Bind ViewModel.SelectedPeriod, Mode=TwoWay}" DisplayMemberPath="Label"
+                              IsEnabled="{x:Bind ViewModel.CanUseData, Mode=OneWay}" MinWidth="250" />
+                    <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsCustomPeriod, Mode=OneWay, Converter={StaticResource BooleanVisibility}}">
+                        <CalendarDatePicker Header="{x:Bind ui:UiText.Get('StartDate')}" Date="{x:Bind ViewModel.StartDate, Mode=TwoWay}" />
+                        <CalendarDatePicker Header="{x:Bind ui:UiText.Get('EndDate')}" Date="{x:Bind ViewModel.EndDate, Mode=TwoWay}" />
+                    </StackPanel>
+                    <Button Content="{x:Bind ui:UiText.Get('ApplyFilter')}" Command="{x:Bind ViewModel.ApplyFilterCommand}" />
+                    <TextBlock Text="{x:Bind ViewModel.TimeZoneCaption}" Style="{StaticResource BodyCopy}" />
+                </StackPanel>
+            </Border>
+            <StackPanel Spacing="12">
+                <TextBlock Text="{x:Bind ViewModel.HistoryCaption, Mode=OneWay}" Style="{StaticResource SectionHeading}" />
+                <CommandBar DefaultLabelPosition="Right" Background="Transparent">
+                    <AppBarButton Icon="Save" Label="{x:Bind ui:UiText.Get('ExportCsv')}" Command="{x:Bind ViewModel.ExportCommand}" />
+                    <AppBarButton Icon="Delete" Label="{x:Bind ui:UiText.Get('DeleteSelected')}" Command="{x:Bind ViewModel.DeleteEntryCommand}" />
+                    <AppBarButton Icon="Clear" Label="{x:Bind ui:UiText.Get('DeleteRange')}" Command="{x:Bind ViewModel.DeleteRangeCommand}" />
+                </CommandBar>
+                <Border Style="{StaticResource SurfaceCard}"
+                        Visibility="{x:Bind ViewModel.IsHistoryEmpty, Mode=OneWay, Converter={StaticResource BooleanVisibility}}">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('HistoryEmpty')}" Style="{StaticResource BodyCopy}" />
+                </Border>
+                <ListView ItemsSource="{x:Bind ViewModel.History}" SelectedItem="{x:Bind ViewModel.SelectedEntry, Mode=TwoWay}"
+                          SelectionMode="Single" MaxHeight="520" HorizontalContentAlignment="Stretch"
+                          IsEnabled="{x:Bind ViewModel.CanUseData, Mode=OneWay}"
+                          AutomationProperties.Name="{x:Bind ui:UiText.Get('HistoryList')}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:EntryRow">
+                            <Grid ColumnSpacing="16" Padding="8,12" AutomationProperties.Name="{x:Bind AccessibleName}">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="48" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                                <controls:MoodFace Score="{x:Bind Score}" Width="44" Height="44" VerticalAlignment="Top" />
+                                <StackPanel Grid.Column="1" Spacing="5">
+                                    <TextBlock Text="{x:Bind MoodLabel}" FontWeight="SemiBold" FontSize="18" />
+                                    <TextBlock Text="{x:Bind Timestamp}" />
+                                    <TextBlock Text="{x:Bind Scores}" Style="{StaticResource BodyCopy}" />
+                                    <TextBlock Text="{x:Bind Factors}" Style="{StaticResource BodyCopy}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

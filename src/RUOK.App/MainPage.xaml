@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="RUOK_App.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:RUOK_App"
+    xmlns:ui="using:RUOK_App.Resources"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <NavigationView x:Name="Navigation" PaneDisplayMode="Auto" OpenPaneLength="230"
+                    IsBackButtonVisible="Collapsed" IsSettingsVisible="False"
+                    SelectionChanged="NavigationChanged">
+        <NavigationView.PaneHeader>
+            <StackPanel Spacing="6" Margin="16,18,8,22">
+                <TextBlock Text="RUOK" FontSize="27" FontWeight="SemiBold" />
+                <TextBlock Text="{x:Bind ui:UiText.Get('PrivateSpace')}" Style="{StaticResource BodyCopy}" />
+            </StackPanel>
+        </NavigationView.PaneHeader>
+        <NavigationView.MenuItems>
+            <NavigationViewItem x:Name="DashboardItem" Content="{x:Bind ui:UiText.Get('Dashboard')}" Icon="Home" Tag="Dashboard" />
+            <NavigationViewItem Content="{x:Bind ui:UiText.Get('PulseCheck')}" Tag="PulseCheck">
+                <NavigationViewItem.Icon>
+                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEB51;" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="{x:Bind ui:UiText.Get('Breathing')}" Icon="Pause" Tag="Breathing" />
+            <NavigationViewItem Content="{x:Bind ui:UiText.Get('History')}" Icon="Calendar" Tag="History" />
+        </NavigationView.MenuItems>
+        <NavigationView.FooterMenuItems>
+            <NavigationViewItem Content="{x:Bind ui:UiText.Get('Settings')}" Icon="Setting" Tag="Settings" />
+            <NavigationViewItem Content="{x:Bind ui:UiText.Get('About')}" Icon="Help" Tag="About" />
+        </NavigationView.FooterMenuItems>
+        <NavigationView.PaneFooter>
+            <StackPanel Spacing="8" Margin="0,12">
+                <TextBlock Text="{x:Bind ui:UiText.Get('LocalOnly')}" FontSize="11" CharacterSpacing="160" Margin="12,0"
+                           Visibility="{Binding IsPaneOpen, ElementName=Navigation, Converter={StaticResource BooleanVisibility}}" />
+                <Button Command="{x:Bind ViewModel.RefreshCommand}" Padding="0" BorderThickness="0"
+                        MinHeight="44" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="4,0"
+                        Width="{x:Bind RefreshButtonWidth(Navigation.IsPaneOpen, Navigation.OpenPaneLength, Navigation.CompactPaneLength), Mode=OneWay}"
+                        AutomationProperties.AutomationId="RefreshLocalData"
+                        AutomationProperties.Name="{x:Bind ui:UiText.Get('Refresh')}"
+                        ToolTipService.ToolTip="{x:Bind ui:UiText.Get('Refresh')}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{x:Bind RefreshIconColumn(Navigation.CompactPaneLength), Mode=OneWay}" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <SymbolIcon Symbol="Refresh" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Text="{x:Bind ui:UiText.Get('Refresh')}" Margin="0,0,8,0"
+                                   VerticalAlignment="Center" TextWrapping="Wrap"
+                                   Visibility="{Binding IsPaneOpen, ElementName=Navigation, Converter={StaticResource BooleanVisibility}}" />
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </NavigationView.PaneFooter>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3" /><RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" /><RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ProgressBar IsIndeterminate="True" Height="3" Visibility="{x:Bind ViewModel.IsBusy, Mode=OneWay, Converter={StaticResource BooleanVisibility}}" />
+            <InfoBar Grid.Row="1" Margin="24,8,24,0" IsOpen="{x:Bind ViewModel.StatusOpen, Mode=TwoWay}"
+                     Message="{x:Bind ViewModel.StatusMessage, Mode=OneWay}" Severity="{x:Bind ViewModel.StatusSeverity, Mode=OneWay}"
+                     AutomationProperties.LiveSetting="Polite" />
+            <Border Grid.Row="2" Margin="24,16,24,0" Style="{StaticResource SurfaceCard}"
+                    Visibility="{x:Bind ViewModel.NeedsPrivacyAcceptance, Mode=OneWay, Converter={StaticResource BooleanVisibility}}">
+                <ScrollViewer MaxHeight="160" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('WelcomeTitle')}" Style="{StaticResource SectionHeading}" />
+                    <TextBlock Text="{x:Bind ui:UiText.Get('WelcomeBody')}" Style="{StaticResource BodyCopy}" />
+                    <Button Command="{x:Bind ViewModel.AcceptPrivacyCommand}" HorizontalAlignment="Stretch"
+                            MinHeight="44" Style="{StaticResource AccentButtonStyle}" AutomationProperties.AutomationId="AcceptPrivacy">
+                        <TextBlock Text="{x:Bind ui:UiText.Get('AcceptPrivacy')}" TextWrapping="Wrap" />
+                    </Button>
+                </StackPanel>
+                </ScrollViewer>
+            </Border>
+            <ContentPresenter x:Name="PageHost" Grid.Row="3" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        </Grid>
+    </NavigationView>
+</Page>

@@ -1,0 +1,96 @@
+<UserControl
+    x:Class="RUOK_App.Views.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:RUOK_App.Resources">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Spacing="24" Margin="28,20,28,32" MaxWidth="1040" HorizontalAlignment="Stretch">
+            <StackPanel Spacing="8">
+                <TextBlock Text="{x:Bind ui:UiText.Get('SettingsTitle')}" Style="{StaticResource PageHeading}" />
+                <TextBlock Text="{x:Bind ui:UiText.Get('SettingsSubtitle')}" Style="{StaticResource BodyCopy}" />
+            </StackPanel>
+            <Border Style="{StaticResource SurfaceCard}">
+                <ContentControl IsEnabled="{x:Bind ViewModel.CanUseData, Mode=OneWay}" HorizontalContentAlignment="Stretch">
+                    <StackPanel Spacing="16">
+                        <ComboBox Header="{x:Bind ui:UiText.Get('AppearanceTitle')}" ItemsSource="{x:Bind ViewModel.Appearances}"
+                                  DisplayMemberPath="Label" SelectedItem="{x:Bind ViewModel.SelectedAppearance, Mode=TwoWay}"
+                                  SelectionChanged="AppearanceChanged" HorizontalAlignment="Stretch" MaxWidth="460"
+                                  AutomationProperties.AutomationId="AppearanceChoice" />
+                        <TextBlock Text="{x:Bind ui:UiText.Get('AppearanceAutoSaveHint')}" Style="{StaticResource BodyCopy}" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.ReducedMotion, Mode=TwoWay}" Toggled="ReducedMotionChanged"
+                                      AutomationProperties.Name="{x:Bind ui:UiText.Get('ReducedMotion')}"
+                                      AutomationProperties.AutomationId="ReducedMotionChoice">
+                            <ToggleSwitch.Header>
+                                <TextBlock Text="{x:Bind ui:UiText.Get('ReducedMotion')}" TextWrapping="Wrap" />
+                            </ToggleSwitch.Header>
+                        </ToggleSwitch>
+                        <TextBlock Text="{x:Bind ui:UiText.Get('ReducedMotionHint')}" Style="{StaticResource BodyCopy}" />
+                    </StackPanel>
+                </ContentControl>
+            </Border>
+            <Border Style="{StaticResource SurfaceCard}">
+                <ContentControl IsEnabled="{x:Bind ViewModel.CanUseData, Mode=OneWay}" HorizontalContentAlignment="Stretch">
+                    <StackPanel Spacing="16">
+                        <ComboBox Header="{x:Bind ui:UiText.Get('RetentionLabel')}" ItemsSource="{x:Bind ViewModel.Retentions}"
+                                  DisplayMemberPath="Label" SelectedItem="{x:Bind ViewModel.SelectedRetention, Mode=TwoWay}"
+                                  HorizontalAlignment="Stretch" MaxWidth="460" AutomationProperties.AutomationId="RetentionChoice" />
+                        <TextBlock Text="{x:Bind ui:UiText.Get('RetentionHint')}" Style="{StaticResource BodyCopy}" />
+                        <Button Content="{x:Bind ui:UiText.Get('ApplyRetention')}" Command="{x:Bind ViewModel.SaveSettingsCommand}"
+                                Style="{StaticResource AccentButtonStyle}" MinHeight="44" AutomationProperties.AutomationId="ApplyRetention" />
+                    </StackPanel>
+                </ContentControl>
+            </Border>
+            <Border Style="{StaticResource SurfaceCard}">
+                <ContentControl IsEnabled="{x:Bind ViewModel.CanUseData, Mode=OneWay}" HorizontalContentAlignment="Stretch">
+                    <StackPanel Spacing="16">
+                        <TextBlock Text="{x:Bind ui:UiText.Get('NotificationsTitle')}" Style="{StaticResource SectionHeading}" />
+                        <TextBlock Text="{x:Bind ui:UiText.Get('NotificationsIntro')}" Style="{StaticResource BodyCopy}" />
+                        <ComboBox Header="{x:Bind ui:UiText.Get('ReminderModeLabel')}" ItemsSource="{x:Bind ViewModel.ReminderModes}"
+                                  DisplayMemberPath="Label" SelectedItem="{x:Bind ViewModel.SelectedReminderMode, Mode=TwoWay}"
+                                  HorizontalAlignment="Stretch" MaxWidth="460" AutomationProperties.AutomationId="ReminderModeChoice" />
+                        <NumberBox Header="{x:Bind ui:UiText.Get('ReminderIntervalLabel')}" Value="{x:Bind ViewModel.ReminderInterval, Mode=TwoWay}"
+                                   Minimum="15" Maximum="480" SmallChange="15" SpinButtonPlacementMode="Inline"
+                                   HorizontalAlignment="Left" Width="220" AutomationProperties.AutomationId="ReminderInterval" />
+                        <TimePicker Header="{x:Bind ui:UiText.Get('ReminderStartLabel')}" Time="{x:Bind ViewModel.ReminderStart, Mode=TwoWay}"
+                                    AutomationProperties.AutomationId="ReminderStart" />
+                        <TimePicker Header="{x:Bind ui:UiText.Get('ReminderEndLabel')}" Time="{x:Bind ViewModel.ReminderEnd, Mode=TwoWay}"
+                                    AutomationProperties.AutomationId="ReminderEnd" />
+                        <CheckBox IsChecked="{x:Bind ViewModel.ReminderWeekdays, Mode=TwoWay}" VerticalContentAlignment="Center">
+                            <TextBlock Text="{x:Bind ui:UiText.Get('ReminderWeekdays')}" TextWrapping="Wrap" />
+                        </CheckBox>
+                        <InfoBar IsOpen="True" IsClosable="False" Severity="Informational"
+                                 Message="{x:Bind ui:UiText.Get('ActivityPrivacy')}" />
+                        <ComboBox Header="{x:Bind ui:UiText.Get('NotificationLayoutLabel')}" ItemsSource="{x:Bind ViewModel.NotificationLayouts}"
+                                  DisplayMemberPath="Label" SelectedItem="{x:Bind ViewModel.SelectedNotificationLayout, Mode=TwoWay}"
+                                  HorizontalAlignment="Stretch" MaxWidth="460" AutomationProperties.AutomationId="NotificationLayoutChoice" />
+                        <ComboBox Header="{x:Bind ui:UiText.Get('FaceActionLabel')}" ItemsSource="{x:Bind ViewModel.FaceActions}"
+                                  DisplayMemberPath="Label" SelectedItem="{x:Bind ViewModel.SelectedFaceAction, Mode=TwoWay}"
+                                  HorizontalAlignment="Stretch" MaxWidth="460" AutomationProperties.AutomationId="NotificationFaceActionChoice" />
+                        <CheckBox IsChecked="{x:Bind ViewModel.KeepInTray, Mode=TwoWay}" VerticalContentAlignment="Center"
+                                  AutomationProperties.AutomationId="KeepInTrayChoice">
+                            <TextBlock Text="{x:Bind ui:UiText.Get('KeepInTrayLabel')}" TextWrapping="Wrap" />
+                        </CheckBox>
+                        <TextBlock Text="{x:Bind ui:UiText.Get('ReminderBackgroundHint')}" Style="{StaticResource BodyCopy}" />
+                        <Button Content="{x:Bind ui:UiText.Get('SaveReminders')}" Command="{x:Bind ViewModel.SaveRemindersCommand}"
+                                Style="{StaticResource AccentButtonStyle}" MinHeight="44" AutomationProperties.AutomationId="SaveReminders" />
+                        <TextBlock Text="{x:Bind ViewModel.NotificationStatus, Mode=OneWay}" Style="{StaticResource BodyCopy}"
+                                   AutomationProperties.AutomationId="NotificationStatus" AutomationProperties.LiveSetting="Polite" />
+                        <Button Content="{x:Bind ui:UiText.Get('TestNotification')}" Command="{x:Bind ViewModel.TestNotificationCommand}"
+                                MinHeight="44" AutomationProperties.AutomationId="TestNotification" />
+                        <TextBlock Text="{x:Bind ui:UiText.Get('TestNotificationHint')}" Style="{StaticResource BodyCopy}" />
+                    </StackPanel>
+                </ContentControl>
+            </Border>
+            <Border Style="{StaticResource SurfaceCard}">
+                <StackPanel Spacing="14">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('DataTitle')}" Style="{StaticResource SectionHeading}" />
+                    <TextBlock Text="{x:Bind ui:UiText.Get('DataProtection')}" Style="{StaticResource BodyCopy}" />
+                    <TextBlock Text="{x:Bind ui:UiText.Get('DataRecovery')}" Style="{StaticResource BodyCopy}" />
+                    <TextBox Header="{x:Bind ui:UiText.Get('DataLocation')}" Text="{x:Bind ViewModel.DataLocation}" IsReadOnly="True" TextWrapping="Wrap" />
+                    <InfoBar IsOpen="True" IsClosable="False" Severity="Informational" Message="{x:Bind ui:UiText.Get('NoMonitoring')}" />
+                    <Button Content="{x:Bind ui:UiText.Get('ResetAll')}" Command="{x:Bind ViewModel.ResetCommand}" MinHeight="44" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

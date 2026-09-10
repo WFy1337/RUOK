@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="Dashboard" xml:space="preserve"><value>Your space</value></data>
+  <data name="PulseCheck" xml:space="preserve"><value>PulseCheck</value></data>
+  <data name="History" xml:space="preserve"><value>Trends &amp; history</value></data>
+  <data name="Breathing" xml:space="preserve"><value>Take a breath</value></data>
+  <data name="Settings" xml:space="preserve"><value>Settings &amp; privacy</value></data>
+  <data name="About" xml:space="preserve"><value>About &amp; resources</value></data>
+  <data name="PrivateSpace" xml:space="preserve"><value>A little space for you.</value></data>
+  <data name="LocalOnly" xml:space="preserve"><value>LOCAL ONLY</value></data>
+  <data name="DashboardTitle" xml:space="preserve"><value>A moment for you</value></data>
+  <data name="DashboardSubtitle" xml:space="preserve"><value>Notice how you feel. Find a little room to breathe. This space is yours.</value></data>
+  <data name="HeroTitle" xml:space="preserve"><value>How are you feeling?</value></data>
+  <data name="HeroBody" xml:space="preserve"><value>There is no right answer. A short check-in can help you reflect on your own experience.</value></data>
+  <data name="StartPulse" xml:space="preserve"><value>Check in with yourself</value></data>
+  <data name="StartBreathing" xml:space="preserve"><value>Take a breathing break</value></data>
+  <data name="WeeklyAverage" xml:space="preserve"><value>7-day mood average</value></data>
+  <data name="AverageScale" xml:space="preserve"><value>on your 1 to 5 scale</value></data>
+  <data name="WeeklyCount" xml:space="preserve"><value>Check-ins this week</value></data>
+  <data name="CountHint" xml:space="preserve"><value>last 7 calendar days</value></data>
+  <data name="LatestMood" xml:space="preserve"><value>Most recent feeling</value></data>
+  <data name="LatestHint" xml:space="preserve"><value>a reflection, not a verdict</value></data>
+  <data name="NoData" xml:space="preserve"><value>--</value></data>
+  <data name="NoCheckInYet" xml:space="preserve"><value>Not recorded</value></data>
+  <data name="DistributionTitle" xml:space="preserve"><value>Your week, in feelings</value></data>
+  <data name="DistributionDescription" xml:space="preserve"><value>Number of check-ins for each response. No check-ins does not mean neutral.</value></data>
+  <data name="AverageExplanation" xml:space="preserve"><value>Average = the sum of your recorded mood scores divided by the number of check-ins. Missing responses are excluded. Small samples do not establish a trend; this is not a medical assessment.</value></data>
+  <data name="DistributionAccessible" xml:space="preserve"><value>{0}: {1} check-ins</value></data>
+  <data name="PulseTitle" xml:space="preserve"><value>How are you feeling right now?</value></data>
+  <data name="PulseSubtitle" xml:space="preserve"><value>Choose the response that feels closest. Add context only if you want to.</value></data>
+  <data name="Mood1" xml:space="preserve"><value>Very low</value></data>
+  <data name="Mood2" xml:space="preserve"><value>Low</value></data>
+  <data name="Mood3" xml:space="preserve"><value>Neutral</value></data>
+  <data name="Mood4" xml:space="preserve"><value>Good</value></data>
+  <data name="Mood5" xml:space="preserve"><value>Great</value></data>
+  <data name="MoodAccessible" xml:space="preserve"><value>{0}, {1} of 5</value></data>
+  <data name="MoodChoices" xml:space="preserve"><value>Choose a mood. Use arrow keys to move between responses.</value></data>
+  <data name="OptionalScores" xml:space="preserve"><value>A little more detail (optional)</value></data>
+  <data name="StressLabel" xml:space="preserve"><value>How much stress are you feeling?</value></data>
+  <data name="EnergyLabel" xml:space="preserve"><value>How much energy do you have?</value></data>
+  <data name="NotRecorded" xml:space="preserve"><value>Not recorded</value></data>
+  <data name="Stress1" xml:space="preserve"><value>1 - Very little stress</value></data>
+  <data name="Stress2" xml:space="preserve"><value>2 - A little stress</value></data>
+  <data name="Stress3" xml:space="preserve"><value>3 - Moderate stress</value></data>
+  <data name="Stress4" xml:space="preserve"><value>4 - High stress</value></data>
+  <data name="Stress5" xml:space="preserve"><value>5 - Very high stress</value></data>
+  <data name="Energy1" xml:space="preserve"><value>1 - Very little energy</value></data>
+  <data name="Energy2" xml:space="preserve"><value>2 - Low energy</value></data>
+  <data name="Energy3" xml:space="preserve"><value>3 - Moderate energy</value></data>
+  <data name="Energy4" xml:space="preserve"><value>4 - High energy</value></data>
+  <data name="Energy5" xml:space="preserve"><value>5 - Very high energy</value></data>
+  <data name="FactorsTitle" xml:space="preserve"><value>What might be influencing your feeling?</value></data>
+  <data name="FactorsHint" xml:space="preserve"><value>Select any that apply, or leave this blank. "Prefer not to say" clears other factors.</value></data>
+  <data name="FactorWork" xml:space="preserve"><value>Work</value></data>
+  <data name="FactorFamily" xml:space="preserve"><value>Family</value></data>
+  <data name="FactorHealth" xml:space="preserve"><value>Health</value></data>
+  <data name="FactorFinances" xml:space="preserve"><value>Finances</value></data>
+  <data name="FactorSleep" xml:space="preserve"><value>Sleep</value></data>
+  <data name="FactorSocialActivity" xml:space="preserve"><value>Social activity</value></data>
+  <data name="FactorExercise" xml:space="preserve"><value>Exercise</value></data>
+  <data name="FactorCurrentTask" xml:space="preserve"><value>Current task</value></data>
+  <data name="FactorOther" xml:space="preserve"><value>Other</value></data>
+  <data name="FactorPreferNotToSay" xml:space="preserve"><value>Prefer not to say</value></data>
+  <data name="SavePulse" xml:space="preserve"><value>Save this check-in</value></data>
+  <data name="Skip" xml:space="preserve"><value>Skip for now</value></data>
+  <data name="SavedLocallyHint" xml:space="preserve"><value>Saved only on this device, protected for your Windows account. You can delete it at any time.</value></data>
+  <data name="PulseSaved" xml:space="preserve"><value>Your check-in was saved locally. Thank you for taking a moment.</value></data>
+  <data name="Skipped" xml:space="preserve"><value>Check-in skipped. No response was recorded.</value></data>
+  <data name="WelcomeTitle" xml:space="preserve"><value>Your data. Your choice.</value></data>
+  <data name="WelcomeBody" xml:space="preserve"><value>Before recording: RUOK protects entries using your Windows account. The default retention is 365 days, with deletion available at any time in Settings. There is no account, telemetry or sharing. Reminders are off until you enable them. Optional activity-aware reminders check idle duration only, without recording activity. RUOK is not a medical device and does not diagnose conditions.</value></data>
+  <data name="AcceptPrivacy" xml:space="preserve"><value>I understand - enable local check-ins</value></data>
+  <data name="PrivacyAccepted" xml:space="preserve"><value>Local check-ins are enabled. Nothing is shared.</value></data>
+  <data name="HistoryTitle" xml:space="preserve"><value>Your own timeline</value></data>
+  <data name="HistorySubtitle" xml:space="preserve"><value>Review your responses, not a scorecard. Select an entry to remove it.</value></data>
+  <data name="PeriodLabel" xml:space="preserve"><value>Time period</value></data>
+  <data name="PeriodDay" xml:space="preserve"><value>Last 24 hours</value></data>
+  <data name="PeriodWeek" xml:space="preserve"><value>Last 7 calendar days</value></data>
+  <data name="PeriodMonth" xml:space="preserve"><value>Last 30 calendar days</value></data>
+  <data name="PeriodAll" xml:space="preserve"><value>All retained entries</value></data>
+  <data name="PeriodCustom" xml:space="preserve"><value>Custom dates</value></data>
+  <data name="StartDate" xml:space="preserve"><value>First day (inclusive)</value></data>
+  <data name="EndDate" xml:space="preserve"><value>Last day (inclusive)</value></data>
+  <data name="ApplyFilter" xml:space="preserve"><value>Apply filter</value></data>
+  <data name="CustomRangeCaption" xml:space="preserve"><value>{0} through {1}</value></data>
+  <data name="TimeZoneCaption" xml:space="preserve"><value>Displayed dates and date filters use: {0}</value></data>
+  <data name="InvalidDateRange" xml:space="preserve"><value>Choose a first and last day, with the first day no later than the last. The displayed range has not changed.</value></data>
+  <data name="HistoryEmpty" xml:space="preserve"><value>No check-ins in this range. There is nothing to catch up on.</value></data>
+  <data name="NoContext" xml:space="preserve"><value>No context recorded</value></data>
+  <data name="EntryScores" xml:space="preserve"><value>Stress: {0} / 5. Energy: {1} / 5.</value></data>
+  <data name="HistoryList" xml:space="preserve"><value>Recorded check-ins. Use arrow keys to select an entry.</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>Export displayed entries</value></data>
+  <data name="DeleteSelected" xml:space="preserve"><value>Delete selected</value></data>
+  <data name="DeleteRange" xml:space="preserve"><value>Delete displayed range</value></data>
+  <data name="DeleteTitle" xml:space="preserve"><value>Delete this check-in?</value></data>
+  <data name="DeleteEntryConfirm" xml:space="preserve"><value>This removes the selected check-in from RUOK. This cannot be undone. Existing exports and external backups are not changed.</value></data>
+  <data name="DeleteRangeTitle" xml:space="preserve"><value>Delete the displayed range?</value></data>
+  <data name="DeleteRangeConfirm" xml:space="preserve"><value>Remove {0} check-ins in "{1}"? This cannot be undone. Existing exports and external backups are not changed.</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Deleted" xml:space="preserve"><value>The selected local data was deleted.</value></data>
+  <data name="ExportTitle" xml:space="preserve"><value>Export sensitive personal information?</value></data>
+  <data name="ExportConfirm" xml:space="preserve"><value>Export {0} displayed entries to an unencrypted CSV file? The file includes timestamps, feelings, stress, energy, and factors, but no notes or Windows account identifiers. Other people or cloud-sync software may access the location you choose. Share only if you intend to.</value></data>
+  <data name="ChooseFile" xml:space="preserve"><value>Choose a file</value></data>
+  <data name="CsvFile" xml:space="preserve"><value>CSV spreadsheet</value></data>
+  <data name="Exported" xml:space="preserve"><value>Exported {0} entries. The CSV is not encrypted; keep it somewhere private.</value></data>
+  <data name="BreathingTitle" xml:space="preserve"><value>Make a little room</value></data>
+  <data name="BreathingSubtitle" xml:space="preserve"><value>A gentle breathing break, at your pace. No breath holds are required.</value></data>
+  <data name="NebulaUnavailable" xml:space="preserve"><value>The nebula visual could not be loaded. Use the breathing phase text below; your exercise controls are still available.</value></data>
+  <data name="BreathingSafety" xml:space="preserve"><value>Breathe comfortably, not forcefully. Stop immediately if you feel uncomfortable, dizzy, or unwell. This exercise is not treatment or a replacement for professional care.</value></data>
+  <data name="Duration" xml:space="preserve"><value>Duration</value></data>
+  <data name="Minutes" xml:space="preserve"><value>{0} min</value></data>
+  <data name="InhaleSeconds" xml:space="preserve"><value>Inhale (seconds)</value></data>
+  <data name="ExhaleSeconds" xml:space="preserve"><value>Exhale (seconds)</value></data>
+  <data name="PacingHint" xml:space="preserve"><value>Use 2 to 20 seconds per phase. Adjust before starting. It is always okay to stop.</value></data>
+  <data name="BreathReady" xml:space="preserve"><value>Ready when you are</value></data>
+  <data name="BreathInhale" xml:space="preserve"><value>Breathe in</value></data>
+  <data name="BreathExhale" xml:space="preserve"><value>Breathe out</value></data>
+  <data name="BreathComplete" xml:space="preserve"><value>A moment, just for you</value></data>
+  <data name="BreathPaused" xml:space="preserve"><value>Paused - breathe normally</value></data>
+  <data name="BreathRemaining" xml:space="preserve"><value>{0} remaining  |  {1} seconds in this phase</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="Pause" xml:space="preserve"><value>Pause</value></data>
+  <data name="Resume" xml:space="preserve"><value>Resume</value></data>
+  <data name="Restart" xml:space="preserve"><value>Restart</value></data>
+  <data name="Stop" xml:space="preserve"><value>Stop</value></data>
+  <data name="ExercisePrivacy" xml:space="preserve"><value>This exercise does not record data. Leaving this page or switching away from RUOK pauses it. Audio and vibration are not enabled in this version.</value></data>
+  <data name="SettingsTitle" xml:space="preserve"><value>Make this space yours</value></data>
+  <data name="SettingsSubtitle" xml:space="preserve"><value>Your preferences stay on this device. Nothing here enables monitoring or sharing.</value></data>
+  <data name="AppearanceTitle" xml:space="preserve"><value>Appearance</value></data>
+  <data name="AppearanceAutoSaveHint" xml:space="preserve"><value>Appearance and reduced-motion changes apply immediately and save automatically. No restart or Apply button is needed.</value></data>
+  <data name="AppearanceSystem" xml:space="preserve"><value>Follow Windows</value></data>
+  <data name="AppearanceLight" xml:space="preserve"><value>Light</value></data>
+  <data name="AppearanceDark" xml:space="preserve"><value>Dark</value></data>
+  <data name="ReducedMotion" xml:space="preserve"><value>Static breathing visual / reduced motion</value></data>
+  <data name="ReducedMotionHint" xml:space="preserve"><value>Stops both the nebula's ambient motion and breathing-size animation. Phase text and timers remain available. Windows reduced-motion and high-contrast preferences are respected.</value></data>
+  <data name="RetentionLabel" xml:space="preserve"><value>Keep entries for</value></data>
+  <data name="KeepUntilDeleted" xml:space="preserve"><value>Until I delete them</value></data>
+  <data name="KeepDays" xml:space="preserve"><value>{0} days</value></data>
+  <data name="RetentionHint" xml:space="preserve"><value>Old entries are removed when RUOK opens or refreshes, not by a background service. A shorter retention period may permanently remove existing entries.</value></data>
+  <data name="ApplyRetention" xml:space="preserve"><value>Apply retention</value></data>
+  <data name="NotificationsTitle" xml:space="preserve"><value>Notifications and Auto mode</value></data>
+  <data name="NotificationsIntro" xml:space="preserve"><value>Optional reminders appear in the normal Windows notification area. Windows controls their placement, spacing, sound and visibility, including Do Not Disturb. Nothing is recorded when you dismiss or skip.</value></data>
+  <data name="ReminderModeLabel" xml:space="preserve"><value>Reminder timing</value></data>
+  <data name="ReminderModeDisabled" xml:space="preserve"><value>Off</value></data>
+  <data name="ReminderModeTimed" xml:space="preserve"><value>Timed reminders</value></data>
+  <data name="ReminderModeActivityAware" xml:space="preserve"><value>Auto - active/idle-aware (opt in)</value></data>
+  <data name="ReminderIntervalLabel" xml:space="preserve"><value>Interval in minutes (15-480)</value></data>
+  <data name="ReminderStartLabel" xml:space="preserve"><value>Window starts (local time)</value></data>
+  <data name="ReminderEndLabel" xml:space="preserve"><value>Window ends (local time)</value></data>
+  <data name="ReminderWeekdays" xml:space="preserve"><value>Weekdays only</value></data>
+  <data name="ActivityPrivacy" xml:space="preserve"><value>Auto mode checks only time since your last input in this Windows session. It waits while you are idle for 5 minutes or more, then gives you 2 minutes after returning before a due reminder. No keys, mouse positions, app names, window titles or activity history are collected or stored.</value></data>
+  <data name="NotificationLayoutLabel" xml:space="preserve"><value>Notification buttons</value></data>
+  <data name="NotificationLayoutFaces" xml:space="preserve"><value>Five faces - very low to great</value></data>
+  <data name="NotificationLayoutSurveyAndSkip" xml:space="preserve"><value>Take the survey / Skip for now</value></data>
+  <data name="FaceActionLabel" xml:space="preserve"><value>When I click a notification face</value></data>
+  <data name="FaceActionSaveMood" xml:space="preserve"><value>Save that mood immediately</value></data>
+  <data name="FaceActionOpenPulseCheck" xml:space="preserve"><value>Open PulseCheck with the face selected</value></data>
+  <data name="KeepInTrayLabel" xml:space="preserve"><value>Keep reminders running in the system tray when I close the window</value></data>
+  <data name="ReminderBackgroundHint" xml:space="preserve"><value>While reminders are enabled, Close can hide RUOK in the tray. Open it again or choose Quit from its tray menu. Quit stops reminders. RUOK does not start at Windows sign-in or wake the PC. After sleep, only one overdue reminder is considered, within your allowed window. An overnight window belongs to the day it starts.</value></data>
+  <data name="SaveReminders" xml:space="preserve"><value>Save reminder settings</value></data>
+  <data name="RemindersSaved" xml:space="preserve"><value>Reminder settings saved. Enabling or changing the schedule starts a fresh interval. Previous RUOK notifications were cleared.</value></data>
+  <data name="ReminderOff" xml:space="preserve"><value>Automatic reminders are off.</value></data>
+  <data name="ReminderScheduleHint" xml:space="preserve"><value>Configured for every {0} minutes within {1}-{2}, subject to your selected days and mode. A recorded check-in postpones the next reminder.</value></data>
+  <data name="NotificationReady" xml:space="preserve"><value>Windows notifications are enabled for RUOK.</value></data>
+  <data name="NotificationBlocked" xml:space="preserve"><value>Windows has disabled RUOK notifications. Check Windows Settings &gt; System &gt; Notifications. RUOK will not override that setting.</value></data>
+  <data name="NotificationUnavailable" xml:space="preserve"><value>Native notification registration is unavailable. Local check-ins still work.</value></data>
+  <data name="NotificationRegistrationError" xml:space="preserve"><value>Windows could not register RUOK notifications ({0}). Run RUOK normally, not as administrator, and check the app's development/package registration.</value></data>
+  <data name="NotificationSendError" xml:space="preserve"><value>Windows could not accept the notification ({0}). No delivery is assumed.</value></data>
+  <data name="NotificationNotAccepted" xml:space="preserve"><value>Windows did not accept the notification. Run RUOK without elevation and check Windows notification settings.</value></data>
+  <data name="ActivityUnavailable" xml:space="preserve"><value>Windows idle information is unavailable. Auto reminders are paused; choose timed reminders or try again later.</value></data>
+  <data name="NotificationTitle" xml:space="preserve"><value>How are you feeling?</value></data>
+  <data name="NotificationSaveBody" xml:space="preserve"><value>Take a moment for yourself. Click a face to save that mood locally, or dismiss to skip.</value></data>
+  <data name="NotificationOpenBody" xml:space="preserve"><value>Click a face to open PulseCheck with your choice selected. Nothing is saved until you confirm.</value></data>
+  <data name="NotificationSurveyBody" xml:space="preserve"><value>A short check-in, only if you want to. Skipping does not record a response.</value></data>
+  <data name="TakeSurvey" xml:space="preserve"><value>Take the survey</value></data>
+  <data name="TestNotification" xml:space="preserve"><value>Send a safe test notification</value></data>
+  <data name="TestNotificationHint" xml:space="preserve"><value>Uses your saved button layout. Clicking a test face only previews the selection in PulseCheck; it never saves a check-in automatically. Check Notification Center if Do Not Disturb hides the banner.</value></data>
+  <data name="NotificationTestTitle" xml:space="preserve"><value>RUOK notification preview</value></data>
+  <data name="NotificationTestBody" xml:space="preserve"><value>This is a test. Click a face or button to try it; no check-in will be saved automatically.</value></data>
+  <data name="TestNotificationSent" xml:space="preserve"><value>Windows accepted the test notification. Its banner may be suppressed by Windows settings or Do Not Disturb. No check-in was saved.</value></data>
+  <data name="TestNotificationReceived" xml:space="preserve"><value>Test notification received. This is a preview only; no check-in was saved. Use Skip to clear the preview.</value></data>
+  <data name="TestNotificationSkipped" xml:space="preserve"><value>Test notification skipped. No check-in was saved.</value></data>
+  <data name="NotificationExpired" xml:space="preserve"><value>This reminder has expired. No response was saved; you can start a new check-in.</value></data>
+  <data name="NotificationInvalid" xml:space="preserve"><value>RUOK could not validate this notification action. No check-in was saved.</value></data>
+  <data name="NotificationNeedsConsent" xml:space="preserve"><value>Review and acknowledge the privacy information before recording. The notification did not save a check-in.</value></data>
+  <data name="NotificationDisabled" xml:space="preserve"><value>Reminders have been turned off. This earlier notification did not save a check-in.</value></data>
+  <data name="NotificationAlreadySaved" xml:space="preserve"><value>This reminder already recorded a check-in. No duplicate was added.</value></data>
+  <data name="NotificationDraft" xml:space="preserve"><value>Review your check-in and save when ready. Your notification selection has not been recorded yet.</value></data>
+  <data name="TrayOpen" xml:space="preserve"><value>Open RUOK</value></data>
+  <data name="TrayQuit" xml:space="preserve"><value>Quit RUOK</value></data>
+  <data name="TrayTooltip" xml:space="preserve"><value>RUOK - reminders running. Right-click to open or quit.</value></data>
+  <data name="TrayUnavailable" xml:space="preserve"><value>RUOK could not create or use its tray icon. The window will stay accessible; reopen RUOK if needed.</value></data>
+  <data name="SettingsSaved" xml:space="preserve"><value>Your preferences were saved locally.</value></data>
+  <data name="RetentionTitle" xml:space="preserve"><value>Shorten data retention?</value></data>
+  <data name="RetentionConfirm" xml:space="preserve"><value>Entries older than {0} days will be removed from RUOK now and on future refreshes. This cannot be undone.</value></data>
+  <data name="ApplyAndDelete" xml:space="preserve"><value>Apply and remove old entries</value></data>
+  <data name="RetentionRemoved" xml:space="preserve"><value>Removed {0} entries under your retention preference.</value></data>
+  <data name="DataTitle" xml:space="preserve"><value>Privacy &amp; your data</value></data>
+  <data name="DataProtection" xml:space="preserve"><value>Your wellbeing values and settings are protected using Windows DPAPI for your user account. The database file still exposes its structure and row count. Encryption does not protect against malware running as you or a privileged administrator.</value></data>
+  <data name="DataRecovery" xml:space="preserve"><value>Losing your Windows profile can make entries unrecoverable. CSV export is available in History. Portable backup/restore is not included yet. Deletion does not erase existing exports, OS backups, or forensic disk traces.</value></data>
+  <data name="DataLocation" xml:space="preserve"><value>Local database location</value></data>
+  <data name="NoMonitoring" xml:space="preserve"><value>No telemetry, manager access, online account or activity history. Optional Auto mode checks idle duration only, in memory. Reminders require opt-in. Sign-in startup is not registered.</value></data>
+  <data name="ResetAll" xml:space="preserve"><value>Delete all data &amp; reset preferences</value></data>
+  <data name="ResetTitle" xml:space="preserve"><value>Reset your RUOK space?</value></data>
+  <data name="ResetConfirm" xml:space="preserve"><value>Delete every local check-in, turn reminders off, clear RUOK notifications, and reset appearance, retention and privacy acknowledgement? This cannot be undone. Export first if you need a copy. External exports and backups will not be deleted.</value></data>
+  <data name="ResetDone" xml:space="preserve"><value>Your local check-ins and preferences were removed. Local recording is disabled until you acknowledge the privacy information again.</value></data>
+  <data name="AboutTitle" xml:space="preserve"><value>A space for reflection, not diagnosis</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>RUOK is not a medical device. It does not diagnose conditions and is not a replacement for professional care. Personal summaries can be incomplete or inaccurate. A mood score alone does not establish an emergency or a health condition.</value></data>
+  <data name="ResourceTitle" xml:space="preserve"><value>Support beyond the screen</value></data>
+  <data name="ResourceBody" xml:space="preserve"><value>If you would like support, consider speaking with someone you trust or a qualified professional. You can also find your employer's employee-assistance contact, if available. If you need immediate help, use your local emergency services. RUOK never contacts anyone automatically.</value></data>
+  <data name="PhaseNotice" xml:space="preserve"><value>Phase 3 preview: local PulseChecks, history, CSV export, breathing and opt-in native reminders. Detailed reflections, scheduled appearance, additional exercises, sign-in startup and portable backups are future milestones. There is no employee-monitoring or team-reporting module.</value></data>
+  <data name="ResourceDeferred" xml:space="preserve"><value>Configurable local resource contacts will be added in a later milestone. No unverified regional phone numbers are supplied.</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Refresh local data</value></data>
+  <data name="Refreshed" xml:space="preserve"><value>Local data refreshed.</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Cancelled" xml:space="preserve"><value>Cancelled. No requested changes were made.</value></data>
+  <data name="StorageError" xml:space="preserve"><value>RUOK could not safely read or save local data. Check available disk space, file access, and your Windows profile, then use Refresh. Displayed history may be out of date. No automatic reset or plaintext fallback was performed.</value></data>
+  <data name="FileError" xml:space="preserve"><value>The file or Windows dialog could not be accessed. Check permissions, free space, and whether the file is in use, then try again. No export success is assumed.</value></data>
+  <data name="ValidationError" xml:space="preserve"><value>Check your selections and acknowledge the privacy information before recording. If the problem continues, refresh local data.</value></data>
+</root>

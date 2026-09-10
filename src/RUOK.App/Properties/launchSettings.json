@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RUOK.App (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "RUOK.App (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,0 +1,94 @@
+<UserControl
+    x:Class="RUOK_App.Views.BreathingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:RUOK_App.Resources"
+    xmlns:controls="using:RUOK_App.Controls">
+    <Grid>
+    <Grid.RowDefinitions><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState>
+                <VisualState.StateTriggers><AdaptiveTrigger MinWindowWidth="1200" /></VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Target="StartButton.(Grid.ColumnSpan)" Value="1" />
+                    <Setter Target="PauseButton.(Grid.Column)" Value="1" />
+                    <Setter Target="PauseButton.(Grid.ColumnSpan)" Value="1" />
+                    <Setter Target="RestartButton.(Grid.Row)" Value="0" />
+                    <Setter Target="RestartButton.(Grid.Column)" Value="2" />
+                    <Setter Target="RestartButton.(Grid.ColumnSpan)" Value="1" />
+                    <Setter Target="StopButton.(Grid.Row)" Value="0" />
+                    <Setter Target="StopButton.(Grid.Column)" Value="3" />
+                    <Setter Target="StopButton.(Grid.ColumnSpan)" Value="1" />
+                </VisualState.Setters>
+            </VisualState>
+            <VisualState>
+                <VisualState.StateTriggers><AdaptiveTrigger MinWindowWidth="0" /></VisualState.StateTriggers>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+    <ScrollViewer x:Name="BreathingScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Spacing="24" Margin="28,20,28,32" MaxWidth="1040" HorizontalAlignment="Stretch">
+            <StackPanel Spacing="8">
+                <TextBlock Text="{x:Bind ui:UiText.Get('BreathingTitle')}" Style="{StaticResource PageHeading}" />
+                <TextBlock Text="{x:Bind ui:UiText.Get('BreathingSubtitle')}" Style="{StaticResource BodyCopy}" />
+            </StackPanel>
+            <InfoBar IsOpen="True" IsClosable="False" Severity="Informational" Message="{x:Bind ui:UiText.Get('BreathingSafety')}" />
+            <Border Style="{StaticResource SurfaceCard}">
+                <controls:NebulaOrb x:Name="BreathingOrb" Height="220" MaxWidth="320" HorizontalAlignment="Stretch"
+                                   BreathingScale="{x:Bind ViewModel.Scale, Mode=OneWay}"
+                                   MotionEnabled="{x:Bind ViewModel.MotionEnabled, Mode=OneWay}"
+                                   HighContrast="{x:Bind ViewModel.HighContrast, Mode=OneWay}"
+                                   AutomationProperties.AccessibilityView="Raw" />
+            </Border>
+            <Border Style="{StaticResource SurfaceCard}">
+                <ContentControl IsEnabled="{x:Bind ViewModel.CanConfigure, Mode=OneWay}" HorizontalContentAlignment="Stretch">
+                <StackPanel Spacing="16">
+                    <ComboBox Header="{x:Bind ui:UiText.Get('Duration')}" ItemsSource="{x:Bind ViewModel.Durations}"
+                              DisplayMemberPath="Label" SelectedItem="{x:Bind ViewModel.SelectedDuration, Mode=TwoWay}" MinWidth="180"
+                              AutomationProperties.AutomationId="BreathingDuration" />
+                    <NumberBox Header="{x:Bind ui:UiText.Get('InhaleSeconds')}" Minimum="2" Maximum="20" SmallChange="1"
+                               SpinButtonPlacementMode="Inline" Value="{x:Bind ViewModel.InhaleSeconds, Mode=TwoWay}" MaxWidth="300" HorizontalAlignment="Left" />
+                    <NumberBox Header="{x:Bind ui:UiText.Get('ExhaleSeconds')}" Minimum="2" Maximum="20" SmallChange="1"
+                               SpinButtonPlacementMode="Inline" Value="{x:Bind ViewModel.ExhaleSeconds, Mode=TwoWay}" MaxWidth="300" HorizontalAlignment="Left" />
+                    <TextBlock Text="{x:Bind ui:UiText.Get('PacingHint')}" Style="{StaticResource BodyCopy}" />
+                </StackPanel>
+                </ContentControl>
+            </Border>
+            <TextBlock Text="{x:Bind ui:UiText.Get('ExercisePrivacy')}" Style="{StaticResource BodyCopy}" />
+        </StackPanel>
+    </ScrollViewer>
+    <Border Grid.Row="1" Padding="20,12" BorderThickness="0,1,0,0"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
+        <StackPanel Spacing="8" MaxWidth="1040">
+            <TextBlock x:Name="PhaseText" Text="{x:Bind ViewModel.Phase, Mode=OneWay}" FontSize="24"
+                       HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"
+                       AutomationProperties.LiveSetting="Polite" />
+            <TextBlock Text="{x:Bind ViewModel.Remaining, Mode=OneWay}" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="12" />
+            <Grid ColumnSpacing="8" RowSpacing="8" MaxWidth="680" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition /><ColumnDefinition /><ColumnDefinition /><ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="StartButton" Grid.ColumnSpan="2" Command="{x:Bind ViewModel.StartCommand}" MinHeight="44"
+                        HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                        AutomationProperties.Name="{x:Bind ui:UiText.Get('Start')}">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('Start')}" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button>
+                <Button x:Name="PauseButton" Grid.Column="2" Grid.ColumnSpan="2" Command="{x:Bind ViewModel.PauseResumeCommand}" MinHeight="44"
+                        HorizontalAlignment="Stretch" AutomationProperties.Name="{x:Bind ViewModel.PauseResumeLabel, Mode=OneWay}">
+                    <TextBlock Text="{x:Bind ViewModel.PauseResumeLabel, Mode=OneWay}" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button>
+                <Button x:Name="RestartButton" Grid.Row="1" Grid.ColumnSpan="2" Command="{x:Bind ViewModel.RestartCommand}" MinHeight="44"
+                        HorizontalAlignment="Stretch" AutomationProperties.Name="{x:Bind ui:UiText.Get('Restart')}">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('Restart')}" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button>
+                <Button x:Name="StopButton" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Command="{x:Bind ViewModel.StopCommand}" MinHeight="44"
+                        HorizontalAlignment="Stretch" AutomationProperties.Name="{x:Bind ui:UiText.Get('Stop')}">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('Stop')}" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button>
+            </Grid>
+        </StackPanel>
+    </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/RUOK.App/RUOK.App.csproj" />
+    <Project Path="src/RUOK.Application/RUOK.Application.csproj" />
+    <Project Path="src/RUOK.Domain/RUOK.Domain.csproj" />
+    <Project Path="src/RUOK.Infrastructure/RUOK.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/RUOK.Domain.Tests/RUOK.Domain.Tests.csproj" />
+    <Project Path="tests/RUOK.Infrastructure.Tests/RUOK.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>

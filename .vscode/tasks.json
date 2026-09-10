@@ -1,0 +1,39 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "RUOK: Build",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"${workspaceFolder}\\RUOK.slnx"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "RUOK: Test",
+			"type": "shell",
+			"command": "dotnet",
+			"args": ["test", "${workspaceFolder}\\RUOK.slnx", "--no-build", "--no-restore"],
+			"dependsOn": "RUOK: Build",
+			"problemMatcher": ["$msCompile"],
+			"group": "test"
+		},
+		{
+			"label": "RUOK: Run",
+			"type": "shell",
+			"command": "dotnet",
+			"args": ["run", "--project", "${workspaceFolder}\\src\\RUOK.App\\RUOK.App.csproj", "--no-build"],
+			"dependsOn": "RUOK: Build",
+			"problemMatcher": ["$msCompile"]
+		}
+	]
+}

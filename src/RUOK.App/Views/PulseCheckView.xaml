@@ -1,0 +1,95 @@
+<UserControl
+    x:Class="RUOK_App.Views.PulseCheckView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:RUOK_App.Resources"
+    xmlns:vm="using:RUOK_App.ViewModels"
+    xmlns:controls="using:RUOK_App.Controls">
+    <Grid>
+    <Grid.RowDefinitions><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Spacing="24" Margin="28,20,28,32" MaxWidth="1040" HorizontalAlignment="Stretch">
+            <StackPanel Spacing="8">
+                <TextBlock Text="{x:Bind ui:UiText.Get('PulseTitle')}" Style="{StaticResource PageHeading}" />
+                <TextBlock Text="{x:Bind ui:UiText.Get('PulseSubtitle')}" Style="{StaticResource BodyCopy}" />
+            </StackPanel>
+            <Border Style="{StaticResource SurfaceCard}">
+                <RadioButtons x:Name="MoodChoices" ItemsSource="{x:Bind ViewModel.MoodOptions}" MaxColumns="1"
+                              SizeChanged="MoodChoicesSizeChanged" Loaded="MoodChoicesLoaded"
+                              SelectedItem="{x:Bind ViewModel.SelectedMood, Mode=TwoWay}"
+                              IsEnabled="{x:Bind ViewModel.CanUseData, Mode=OneWay}"
+                              AutomationProperties.AutomationId="MoodChoices"
+                              AutomationProperties.Name="{x:Bind ui:UiText.Get('MoodChoices')}">
+                    <RadioButtons.Resources>
+                        <x:Double x:Key="RadioButtonsColumnSpacing">12</x:Double>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource MoodTileRadioButtonStyle}" />
+                        <Style TargetType="ItemsRepeater">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </RadioButtons.Resources>
+                    <RadioButtons.ItemTemplate>
+                        <DataTemplate x:DataType="vm:MoodOption">
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                  AutomationProperties.Name="{x:Bind AccessibleName}">
+                                <StackPanel Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <controls:MoodFace Score="{x:Bind Score}" Width="52" Height="52" />
+                                    <TextBlock Text="{x:Bind Label}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+                                    <TextBlock Text="{x:Bind Score}" HorizontalAlignment="Center" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </RadioButtons.ItemTemplate>
+                </RadioButtons>
+            </Border>
+            <Border Style="{StaticResource SurfaceCard}">
+                <ContentControl IsEnabled="{x:Bind ViewModel.CanUseData, Mode=OneWay}" HorizontalContentAlignment="Stretch">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('OptionalScores')}" Style="{StaticResource SectionHeading}" />
+                    <ComboBox Header="{x:Bind ui:UiText.Get('StressLabel')}" ItemsSource="{x:Bind ViewModel.StressOptions}"
+                              DisplayMemberPath="Label" SelectedItem="{x:Bind ViewModel.SelectedStress, Mode=TwoWay}"
+                              HorizontalAlignment="Stretch" MaxWidth="460" />
+                    <ComboBox Header="{x:Bind ui:UiText.Get('EnergyLabel')}" ItemsSource="{x:Bind ViewModel.EnergyOptions}"
+                              DisplayMemberPath="Label" SelectedItem="{x:Bind ViewModel.SelectedEnergy, Mode=TwoWay}"
+                              HorizontalAlignment="Stretch" MaxWidth="460" />
+                </StackPanel>
+                </ContentControl>
+            </Border>
+            <Border Style="{StaticResource SurfaceCard}">
+                <ContentControl IsEnabled="{x:Bind ViewModel.CanUseData, Mode=OneWay}" HorizontalContentAlignment="Stretch">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('FactorsTitle')}" Style="{StaticResource SectionHeading}" />
+                    <TextBlock Text="{x:Bind ui:UiText.Get('FactorsHint')}" Style="{StaticResource BodyCopy}" />
+                    <ItemsRepeater ItemsSource="{x:Bind ViewModel.Factors}">
+                        <ItemsRepeater.Layout>
+                            <UniformGridLayout MinItemWidth="175" MinColumnSpacing="8" MinRowSpacing="4" ItemsStretch="Fill" />
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="vm:FactorOption">
+                                <CheckBox Content="{x:Bind Label}" IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                                          Style="{StaticResource PulseFactorCheckBoxStyle}" />
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </StackPanel>
+                </ContentControl>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+    <Border Grid.Row="1" Padding="20,12" BorderThickness="0,1,0,0"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
+        <StackPanel Spacing="8" MaxWidth="1040">
+            <Grid ColumnSpacing="12">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                <Button Command="{x:Bind ViewModel.SavePulseCommand}" HorizontalAlignment="Stretch"
+                        Style="{StaticResource AccentButtonStyle}" MinHeight="44" AutomationProperties.AutomationId="SavePulse">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('SavePulse')}" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button>
+                <Button Grid.Column="1" Command="{x:Bind ViewModel.SkipCommand}" HorizontalAlignment="Stretch" MinHeight="44">
+                    <TextBlock Text="{x:Bind ui:UiText.Get('Skip')}" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button>
+            </Grid>
+            <TextBlock Text="{x:Bind ui:UiText.Get('SavedLocallyHint')}" Style="{StaticResource BodyCopy}" FontSize="12" />
+        </StackPanel>
+    </Border>
+    </Grid>
+</UserControl>

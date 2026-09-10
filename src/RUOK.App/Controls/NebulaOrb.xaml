@@ -1,0 +1,21 @@
+<UserControl
+    x:Class="RUOK_App.Controls.NebulaOrb"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:RUOK_App.Resources"
+    IsHitTestVisible="False">
+    <Grid>
+        <Viewbox Stretch="Uniform">
+            <Grid Width="320" Height="320">
+                <Grid x:Name="CompositionHost" />
+                <Grid x:Name="ContrastVisual" Visibility="Collapsed">
+                    <Ellipse Width="246" Height="246" Stroke="{ThemeResource TextFillColorPrimaryBrush}" StrokeThickness="3" />
+                    <Ellipse Width="186" Height="186" Stroke="{ThemeResource TextFillColorPrimaryBrush}" StrokeThickness="1" Opacity="0.65" />
+                </Grid>
+            </Grid>
+        </Viewbox>
+        <TextBlock x:Name="VisualError" Text="{x:Bind ui:UiText.Get('NebulaUnavailable')}"
+                   Visibility="Collapsed" VerticalAlignment="Bottom" TextAlignment="Center"
+                   TextWrapping="Wrap" Style="{StaticResource BodyCopy}" />
+    </Grid>
+</UserControl>
