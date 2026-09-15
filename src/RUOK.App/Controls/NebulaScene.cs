@@ -132,7 +132,7 @@ internal sealed class NebulaScene : IDisposable
 
     private LoadedImageSurface LoadMask(string name)
     {
-        var surface = Own(LoadedImageSurface.StartLoadFromUri(new Uri($"ms-appx:///Assets/Nebula/{name}")));
+        var surface = Own(LoadedImageSurface.StartLoadFromUri(AppRuntime.AssetUri("Nebula", name)));
         _surfaces.Add(surface);
         surface.LoadCompleted += ImageLoaded;
         return surface;

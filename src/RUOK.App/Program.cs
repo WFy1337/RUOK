@@ -10,7 +10,7 @@ internal static class Program
     private static int Main()
     {
         WinRT.ComWrappersSupport.InitializeComWrappers();
-        var instance = AppInstance.FindOrRegisterForKey("RUOK.Main");
+        var instance = AppInstance.FindOrRegisterForKey(AppRuntime.InstanceKey);
         if (!instance.IsCurrent)
         {
             AllowSetForegroundWindow(instance.ProcessId);

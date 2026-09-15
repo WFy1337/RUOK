@@ -7,7 +7,8 @@ public enum NotificationAction
 {
     Open,
     Mood,
-    Skip
+    Skip,
+    Encouragement
 }
 
 public enum NotificationOutcome
@@ -18,7 +19,8 @@ public enum NotificationOutcome
     NeedsConsent,
     Disabled,
     Save,
-    Open
+    Open,
+    Encouragement
 }
 
 public sealed record NotificationIntent(
@@ -31,6 +33,8 @@ public sealed record NotificationIntent(
     {
         if (IsExpired(now))
             return NotificationOutcome.Expired;
+        if (Action == NotificationAction.Encouragement)
+            return NotificationOutcome.Encouragement;
         if (Action == NotificationAction.Skip)
             return NotificationOutcome.Skip;
         if (IsTest)
@@ -85,9 +89,12 @@ public sealed record NotificationIntent(
             "open" => NotificationAction.Open,
             "mood" => NotificationAction.Mood,
             "skip" => NotificationAction.Skip,
+            "encouragement" => NotificationAction.Encouragement,
             _ => null
         };
         if (action is null)
+            return false;
+        if (action == NotificationAction.Encouragement && values.ContainsKey("mood"))
             return false;
         Mood? mood = null;
         if (action == NotificationAction.Mood)

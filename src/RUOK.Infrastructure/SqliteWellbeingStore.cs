@@ -7,7 +7,7 @@ using RUOK.Domain;
 
 namespace RUOK.Infrastructure;
 
-public sealed class SqliteWellbeingStore : IWellbeingStore
+public sealed class SqliteWellbeingStore : IWellbeingStore, IEncouragementStore
 {
     private const int SchemaVersion = 1;
     private const int MaximumPayloadBytes = 128 * 1024;
@@ -189,6 +189,55 @@ public sealed class SqliteWellbeingStore : IWellbeingStore
             transaction.Commit();
             return true;
         }, cancellationToken);
+
+    public Task<EncouragementState> ReadEncouragementsAsync(CancellationToken cancellationToken = default) =>
+        RunAsync(connection => ReadEncouragements(connection, null), cancellationToken);
+
+    public Task<bool> TrySaveEncouragementsAsync(
+        EncouragementState expected, EncouragementState replacement, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(expected);
+        ArgumentNullException.ThrowIfNull(replacement);
+        expected.Validate();
+        replacement.Validate();
+        return RunAsync(connection =>
+        {
+            using var transaction = connection.BeginTransaction(deferred: false);
+            var current = ReadEncouragements(connection, transaction);
+            if (current != expected)
+                return false;
+            if (current == replacement)
+                return true;
+            var payload = Protect(replacement, "RUOK:encouragements:v1");
+            using var command = connection.CreateCommand();
+            command.Transaction = transaction;
+            command.CommandText = """
+                INSERT INTO Preferences(key, protected_value, value_version) VALUES ('encouragements', $value, 1)
+                ON CONFLICT(key) DO UPDATE SET protected_value = excluded.protected_value, value_version = 1;
+                """;
+            command.Parameters.Add("$value", SqliteType.Blob).Value = payload;
+            cancellationToken.ThrowIfCancellationRequested();
+            command.ExecuteNonQuery();
+            cancellationToken.ThrowIfCancellationRequested();
+            transaction.Commit();
+            return true;
+        }, cancellationToken);
+    }
+
+    private EncouragementState ReadEncouragements(SqliteConnection connection, SqliteTransaction? transaction)
+    {
+        using var command = connection.CreateCommand();
+        command.Transaction = transaction;
+        command.CommandText = "SELECT protected_value, value_version FROM Preferences WHERE key = 'encouragements';";
+        using var reader = command.ExecuteReader();
+        if (!reader.Read())
+            return new EncouragementState();
+        if (reader.GetInt32(1) != 1)
+            throw new DataStoreException("The encouragement settings format is not supported. No settings were reset.");
+        var state = Unprotect<EncouragementState>((byte[])reader[0], "RUOK:encouragements:v1");
+        state.Validate();
+        return state;
+    }
 
     private IReadOnlyList<PulseEntry> ReadEntries(
         SqliteConnection connection, SqliteTransaction? transaction, CancellationToken cancellationToken)

@@ -9,7 +9,6 @@ using RUOK_App.Services;
 using RUOK_App.Resources;
 using RUOK_App.ViewModels;
 using Windows.Graphics;
-using Windows.Storage;
 using Windows.UI.ViewManagement;
 
 namespace RUOK_App;
@@ -34,23 +33,27 @@ public sealed partial class MainWindow : Window
         InitializeComponent();
         ExtendsContentIntoTitleBar = true;
         SetTitleBar(AppTitleBar);
-        AppWindow.SetIcon("Assets/AppIcon.ico");
+        AppWindow.SetIcon(AppRuntime.AssetPath("AppIcon.ico"));
         AppWindow.Resize(new SizeInt32(1180, 860));
         _themeSettings = ThemeSettings.CreateForWindowId(AppWindow.Id);
 
-        var dataPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Data", "ruok.db");
+        var dataPath = AppRuntime.DataPath;
         var services = new ServiceCollection();
         services.AddSingleton(TimeProvider.System);
         services.AddSingleton(TimeZoneInfo.Local);
         services.AddSingleton<IDataProtector, DpapiDataProtector>();
-        services.AddSingleton<IWellbeingStore>(provider => new SqliteWellbeingStore(dataPath, provider.GetRequiredService<IDataProtector>()));
+        services.AddSingleton(provider => new SqliteWellbeingStore(dataPath, provider.GetRequiredService<IDataProtector>()));
+        services.AddSingleton<IWellbeingStore>(provider => provider.GetRequiredService<SqliteWellbeingStore>());
+        services.AddSingleton<IEncouragementStore>(provider => provider.GetRequiredService<SqliteWellbeingStore>());
         services.AddSingleton<WellbeingService>();
+        services.AddSingleton<EncouragementService>();
         services.AddSingleton<ICsvExporter, CsvExporter>();
         services.AddSingleton<IUserDialogs>(new UserDialogs(this));
         services.AddSingleton(provider => new MainViewModel(
             provider.GetRequiredService<WellbeingService>(), provider.GetRequiredService<ICsvExporter>(),
             provider.GetRequiredService<IUserDialogs>(), provider.GetRequiredService<TimeProvider>(),
-            provider.GetRequiredService<TimeZoneInfo>(), dataPath, notifications));
+            provider.GetRequiredService<TimeZoneInfo>(), dataPath, notifications,
+            provider.GetRequiredService<EncouragementService>()));
         services.AddSingleton<BreathingViewModel>();
         _services = services.BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
         _viewModel = _services.GetRequiredService<MainViewModel>();
@@ -193,7 +196,7 @@ public sealed partial class MainWindow : Window
         };
         UpdateTitleBarTheme();
         _breathing.ReducedMotion = settings.ReducedMotion;
-        if (settings.Notifications.Mode != ReminderMode.Disabled && settings.Notifications.KeepInTray)
+        if (settings.Notifications.KeepInTray && _viewModel.HasScheduledNotifications)
             EnsureTray();
         else if (_tray is not null)
         {

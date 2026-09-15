@@ -225,6 +225,48 @@ public sealed class NotificationTests
     }
 
     [TestMethod]
+    public void StandaloneFacesUseEscapedLocalFilesWithoutChangingTheirActions()
+    {
+        var images = Enumerable.Range(1, 5).Select(score =>
+            new Uri($@"C:\RUOK & tools\Assets\NotificationFaces\Mood{score}.png").AbsoluteUri).ToArray();
+        var xml = XDocument.Parse(NotificationPayload.Create(Intent(), NotificationLayout.Faces,
+            new NotificationText("RUOK", "Optional", "Survey", "Skip", ["1", "2", "3", "4", "5"]), images));
+        var actions = xml.Descendants("action").ToArray();
+        Assert.HasCount(5, actions);
+        for (var i = 0; i < 5; i++)
+        {
+            Assert.AreEqual(images[i], actions[i].Attribute("imageUri")!.Value);
+            Assert.AreEqual("", actions[i].Attribute("content")!.Value);
+            Assert.IsTrue(NotificationIntent.TryParse(actions[i].Attribute("arguments")!.Value, out var intent));
+            Assert.AreEqual(NotificationAction.Mood, intent!.Action);
+            Assert.AreEqual((Mood)(i + 1), intent.Mood);
+        }
+    }
+
+    [TestMethod]
+    [DataRow("")]
+    [DataRow("Assets/Mood1.png")]
+    [DataRow("https://example.invalid/Mood1.png")]
+    [DataRow("file://server/share/Mood1.png")]
+    public void StandaloneImagesRejectNonlocalOrRelativeUris(string image)
+    {
+        Assert.Throws<ArgumentException>(() => NotificationPayload.Create(Intent(), NotificationLayout.Faces,
+            new NotificationText("RUOK", "Optional", "Survey", "Skip", ["1", "2", "3", "4", "5"]),
+            Enumerable.Repeat(image, 5).ToArray()));
+    }
+
+    [TestMethod]
+    [DataRow(0)]
+    [DataRow(4)]
+    [DataRow(6)]
+    public void StandaloneImagesRequireExactlyFiveFaces(int count)
+    {
+        Assert.Throws<ArgumentException>(() => NotificationPayload.Create(Intent(), NotificationLayout.Faces,
+            new NotificationText("RUOK", "Optional", "Survey", "Skip", ["1", "2", "3", "4", "5"]),
+            Enumerable.Repeat("file:///C:/RUOK/Mood1.png", count).ToArray()));
+    }
+
+    [TestMethod]
     public async Task NotificationSaveIsIdempotentAcrossServiceAndStoreInstances()
     {
         var store = Store();

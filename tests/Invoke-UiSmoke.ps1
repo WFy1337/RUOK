@@ -4,10 +4,13 @@ param(
     [Parameter(Mandatory = $true)]
     [ValidateRange(1, 2147483647)]
     [int]$ProcessId,
+    [string]$StandaloneExecutable,
     [switch]$CheckCompletion,
     [switch]$CheckCompactLayout,
     [switch]$CheckFaceSelection,
     [switch]$CheckNebula,
+    [switch]$CheckEncouragements,
+    [switch]$EncouragementsOnly,
     [switch]$AlignmentOnly
 )
 
@@ -17,8 +20,28 @@ Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
 
 $app = Get-Process -Id $ProcessId
-if ($app.ProcessName -ne 'RUOK.App' -or $app.MainWindowHandle -eq 0) {
+if ($StandaloneExecutable) {
+    $StandaloneExecutable = (Resolve-Path -LiteralPath $StandaloneExecutable).ProviderPath
+    if (-not [string]::Equals($app.Path, $StandaloneExecutable, [StringComparison]::OrdinalIgnoreCase)) {
+        throw 'The standalone test process must match the explicitly supplied executable path.'
+    }
+    Add-Type @'
+using System;
+using System.Runtime.InteropServices;
+public static class RuokStandaloneIdentity {
+    [DllImport("kernel32.dll", ExactSpelling = true)]
+    public static extern int GetPackageFullName(IntPtr process, ref uint length, IntPtr name);
+}
+'@
+    [uint32]$packageLength = 0
+    if ([RuokStandaloneIdentity]::GetPackageFullName($app.Handle, [ref]$packageLength, [IntPtr]::Zero) -ne 15700) {
+        throw 'Standalone checks cannot target a packaged app or RUOK Testing.'
+    }
+} elseif ($app.ProcessName -ne 'RUOK.App') {
     throw 'The supplied process must be a running RUOK.App with a native window.'
+}
+if ($app.MainWindowHandle -eq 0 -or $app.MainWindowTitle -ne 'RUOK') {
+    throw 'The supplied process must expose the native RUOK window.'
 }
 $root = [System.Windows.Automation.AutomationElement]::FromHandle($app.MainWindowHandle)
 $scope = [System.Windows.Automation.TreeScope]::Descendants
@@ -143,6 +166,12 @@ function Assert-Alignment([string]$Description) {
         }
     }
     Write-Output "PASS: Centered, equal-width mood tiles and aligned compact Refresh ($Description)."
+}
+
+if ($CheckEncouragements -or $EncouragementsOnly) {
+    . (Join-Path $PSScriptRoot 'Encouragement-VisualChecks.ps1')
+    Invoke-EncouragementChecks
+    if ($EncouragementsOnly) { return }
 }
 
 Select-Page 'Dashboard' 'DashboardTitle'

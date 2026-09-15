@@ -3,7 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="using:RUOK_App.Resources">
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                  AutomationProperties.AutomationId="SettingsScroll">
         <StackPanel Spacing="24" Margin="28,20,28,32" MaxWidth="1040" HorizontalAlignment="Stretch">
             <StackPanel Spacing="8">
                 <TextBlock Text="{x:Bind ui:UiText.Get('SettingsTitle')}" Style="{StaticResource PageHeading}" />
@@ -78,6 +79,45 @@
                         <Button Content="{x:Bind ui:UiText.Get('TestNotification')}" Command="{x:Bind ViewModel.TestNotificationCommand}"
                                 MinHeight="44" AutomationProperties.AutomationId="TestNotification" />
                         <TextBlock Text="{x:Bind ui:UiText.Get('TestNotificationHint')}" Style="{StaticResource BodyCopy}" />
+                    </StackPanel>
+                </ContentControl>
+            </Border>
+            <Border Style="{StaticResource SurfaceCard}">
+                <ContentControl IsEnabled="{x:Bind ViewModel.CanUseEncouragements, Mode=OneWay}" HorizontalContentAlignment="Stretch">
+                    <StackPanel Spacing="16">
+                        <TextBlock Text="{x:Bind ui:UiText.Get('EncouragementTitle')}" Style="{StaticResource SectionHeading}"
+                                   AutomationProperties.AutomationId="EncouragementHeading" />
+                        <TextBlock Text="{x:Bind ui:UiText.Get('EncouragementIntro')}" Style="{StaticResource BodyCopy}" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.EncouragementEnabled, Mode=TwoWay}"
+                                      AutomationProperties.Name="{x:Bind ui:UiText.Get('EncouragementEnabledLabel')}"
+                                      AutomationProperties.AutomationId="EncouragementEnabled">
+                            <ToggleSwitch.Header>
+                                <TextBlock Text="{x:Bind ui:UiText.Get('EncouragementEnabledLabel')}" TextWrapping="Wrap" />
+                            </ToggleSwitch.Header>
+                        </ToggleSwitch>
+                        <NumberBox Header="{x:Bind ui:UiText.Get('EncouragementIntervalLabel')}"
+                                   Value="{x:Bind ViewModel.EncouragementMinimumInterval, Mode=TwoWay}"
+                                   Minimum="15" Maximum="240" SmallChange="15" SpinButtonPlacementMode="Inline"
+                                   HorizontalAlignment="Left" Width="240" AutomationProperties.AutomationId="EncouragementInterval" />
+                        <TextBlock Text="{x:Bind ui:UiText.Get('EncouragementTimingHint')}" Style="{StaticResource BodyCopy}" />
+                        <TextBox Header="{x:Bind ui:UiText.Get('EncouragementMessagesLabel')}"
+                                 Text="{x:Bind ViewModel.EncouragementMessages, Mode=TwoWay}"
+                                 AcceptsReturn="True" TextWrapping="Wrap" MinHeight="190" MaxHeight="300" MaxLength="4860"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 AutomationProperties.AutomationId="EncouragementMessages" />
+                        <TextBlock Text="{x:Bind ui:UiText.Get('EncouragementMessagesHint')}" Style="{StaticResource BodyCopy}" />
+                        <Button Content="{x:Bind ui:UiText.Get('EncouragementSave')}"
+                                Command="{x:Bind ViewModel.SaveEncouragementsCommand}" MinHeight="44"
+                                Style="{StaticResource AccentButtonStyle}" AutomationProperties.AutomationId="SaveEncouragements" />
+                        <Button Content="{x:Bind ui:UiText.Get('EncouragementPreview')}"
+                                Command="{x:Bind ViewModel.PreviewEncouragementCommand}" MinHeight="44"
+                                AutomationProperties.AutomationId="PreviewEncouragement" />
+                        <Button Content="{x:Bind ui:UiText.Get('EncouragementRestore')}"
+                                Command="{x:Bind ViewModel.RestoreEncouragementMessagesCommand}" MinHeight="44"
+                                AutomationProperties.AutomationId="RestoreEncouragementMessages" />
+                        <TextBlock Text="{x:Bind ViewModel.EncouragementStatus, Mode=OneWay}" Style="{StaticResource BodyCopy}"
+                                   AutomationProperties.AutomationId="EncouragementStatus" AutomationProperties.LiveSetting="Polite" />
+                        <TextBlock Text="{x:Bind ui:UiText.Get('EncouragementPreviewHint')}" Style="{StaticResource BodyCopy}" />
                     </StackPanel>
                 </ContentControl>
             </Border>

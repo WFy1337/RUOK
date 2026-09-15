@@ -157,7 +157,7 @@
   <data name="FaceActionSaveMood" xml:space="preserve"><value>Save that mood immediately</value></data>
   <data name="FaceActionOpenPulseCheck" xml:space="preserve"><value>Open PulseCheck with the face selected</value></data>
   <data name="KeepInTrayLabel" xml:space="preserve"><value>Keep reminders running in the system tray when I close the window</value></data>
-  <data name="ReminderBackgroundHint" xml:space="preserve"><value>While reminders are enabled, Close can hide RUOK in the tray. Open it again or choose Quit from its tray menu. Quit stops reminders. RUOK does not start at Windows sign-in or wake the PC. After sleep, only one overdue reminder is considered, within your allowed window. An overnight window belongs to the day it starts.</value></data>
+  <data name="ReminderBackgroundHint" xml:space="preserve"><value>While PulseCheck reminders or motivational notifications are enabled, Close can hide RUOK in the tray. Open it again or choose Quit from its tray menu. Quit stops both. RUOK does not start at Windows sign-in or wake the PC. After sleep, only one overdue notification per type is considered, within your allowed window. An overnight window belongs to the day it starts.</value></data>
   <data name="SaveReminders" xml:space="preserve"><value>Save reminder settings</value></data>
   <data name="RemindersSaved" xml:space="preserve"><value>Reminder settings saved. Enabling or changing the schedule starts a fresh interval. Previous RUOK notifications were cleared.</value></data>
   <data name="ReminderOff" xml:space="preserve"><value>Automatic reminders are off.</value></data>
@@ -191,6 +191,26 @@
   <data name="TrayQuit" xml:space="preserve"><value>Quit RUOK</value></data>
   <data name="TrayTooltip" xml:space="preserve"><value>RUOK - reminders running. Right-click to open or quit.</value></data>
   <data name="TrayUnavailable" xml:space="preserve"><value>RUOK could not create or use its tray icon. The window will stay accessible; reopen RUOK if needed.</value></data>
+  <data name="EncouragementTitle" xml:space="preserve"><value>Motivational notifications</value></data>
+  <data name="EncouragementIntro" xml:space="preserve"><value>A little encouragement, in your own words. RUOK randomly chooses a short message without repeating the previous one when your list has more than one message. This is independent of PulseCheck and never records a check-in.</value></data>
+  <data name="EncouragementEnabledLabel" xml:space="preserve"><value>Send motivational notifications automatically</value></data>
+  <data name="EncouragementIntervalLabel" xml:space="preserve"><value>Minimum spacing (minutes)</value></data>
+  <data name="EncouragementTimingHint" xml:space="preserve"><value>Choose 15-240 minutes. The delay is randomly chosen between that value and twice that value; 120 means every 2-4 hours. Uses the saved notification hours and weekdays above, even when PulseCheck timing is Off. Leave RUOK open or running in its tray; Quit stops delivery.</value></data>
+  <data name="EncouragementMessagesLabel" xml:space="preserve"><value>Your messages - one per line</value></data>
+  <data name="EncouragementMessagesHint" xml:space="preserve"><value>Use 1-30 messages, up to 160 characters each. Blank lines and duplicate messages are ignored. Changes, including turning notifications off, take effect after Save encouragements. Custom text is protected locally but is visible in Windows notifications; avoid sensitive information.</value></data>
+  <data name="EncouragementSave" xml:space="preserve"><value>Save encouragements</value></data>
+  <data name="EncouragementPreview" xml:space="preserve"><value>Send a preview now</value></data>
+  <data name="EncouragementRestore" xml:space="preserve"><value>Use default messages</value></data>
+  <data name="EncouragementPreviewHint" xml:space="preserve"><value>Preview uses the current editor, even while automatic delivery is Off. It does not save your edits, enable a schedule or record a mood. Windows controls banner visibility and Do Not Disturb.</value></data>
+  <data name="EncouragementOff" xml:space="preserve"><value>Automatic motivational notifications are off.</value></data>
+  <data name="EncouragementUnavailable" xml:space="preserve"><value>Motivational notification settings are unavailable. Local check-ins remain available; refresh to retry. Existing data has not been reset.</value></data>
+  <data name="EncouragementScheduleHint" xml:space="preserve"><value>Enabled: a random message every {0}-{1} minutes, within your saved notification hours. New schedules wait before the first message; use Preview to try one now.</value></data>
+  <data name="EncouragementSaved" xml:space="preserve"><value>Encouragement settings saved. Your PulseCheck settings and check-ins are unchanged.</value></data>
+  <data name="EncouragementDefaultsLoaded" xml:space="preserve"><value>Default messages loaded into the editor. Save encouragements to apply them.</value></data>
+  <data name="EncouragementNotificationTitle" xml:space="preserve"><value>A little encouragement</value></data>
+  <data name="EncouragementPreviewTitle" xml:space="preserve"><value>RUOK encouragement preview</value></data>
+  <data name="EncouragementPreviewSent" xml:space="preserve"><value>Windows accepted the encouragement preview. Check Notification Center if the banner is hidden. No settings or check-in were saved.</value></data>
+  <data name="EncouragementOpened" xml:space="preserve"><value>Welcome back. Opening an encouragement does not record a check-in.</value></data>
   <data name="SettingsSaved" xml:space="preserve"><value>Your preferences were saved locally.</value></data>
   <data name="RetentionTitle" xml:space="preserve"><value>Shorten data retention?</value></data>
   <data name="RetentionConfirm" xml:space="preserve"><value>Entries older than {0} days will be removed from RUOK now and on future refreshes. This cannot be undone.</value></data>
@@ -209,7 +229,7 @@
   <data name="Disclaimer" xml:space="preserve"><value>RUOK is not a medical device. It does not diagnose conditions and is not a replacement for professional care. Personal summaries can be incomplete or inaccurate. A mood score alone does not establish an emergency or a health condition.</value></data>
   <data name="ResourceTitle" xml:space="preserve"><value>Support beyond the screen</value></data>
   <data name="ResourceBody" xml:space="preserve"><value>If you would like support, consider speaking with someone you trust or a qualified professional. You can also find your employer's employee-assistance contact, if available. If you need immediate help, use your local emergency services. RUOK never contacts anyone automatically.</value></data>
-  <data name="PhaseNotice" xml:space="preserve"><value>Phase 3 preview: local PulseChecks, history, CSV export, breathing and opt-in native reminders. Detailed reflections, scheduled appearance, additional exercises, sign-in startup and portable backups are future milestones. There is no employee-monitoring or team-reporting module.</value></data>
+  <data name="PhaseNotice" xml:space="preserve"><value>Version 1.0.0 preview: local PulseChecks, history, CSV export, breathing, opt-in reminders and customizable encouragements. Detailed reflections, scheduled appearance, additional exercises, sign-in startup and portable backups are future milestones. There is no employee-monitoring or team-reporting module.</value></data>
   <data name="ResourceDeferred" xml:space="preserve"><value>Configurable local resource contacts will be added in a later milestone. No unverified regional phone numbers are supplied.</value></data>
   <data name="Refresh" xml:space="preserve"><value>Refresh local data</value></data>
   <data name="Refreshed" xml:space="preserve"><value>Local data refreshed.</value></data>

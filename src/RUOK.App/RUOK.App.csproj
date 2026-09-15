@@ -14,7 +14,42 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+    <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+    <Product>RUOK</Product>
+    <AssemblyTitle>RUOK</AssemblyTitle>
+    <Version>1.0.0</Version>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RUOKStandalone)' == 'true'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <WindowsPackageType>None</WindowsPackageType>
+    <ProjectPriFileName>resources.pri</ProjectPriFileName>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <EnableWinAppRunSupport>false</EnableWinAppRunSupport>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(RUOKStandalone)' == 'true' and '$(RUOKNoticesPath)' != ''">
+    <Content Include="$(RUOKNoticesPath)\**\*"
+             Link="ThirdPartyNotices\%(RecursiveDir)%(Filename)%(Extension)"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(RUOKStandalone)' == 'true' and '$(RUOKSupportPath)' != ''">
+    <Content Include="$(RUOKSupportPath)\Microsoft.WindowsAppRuntime.Insights.Resource.dll"
+             Link="Microsoft.WindowsAppRuntime.Insights.Resource.dll"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Target Name="ValidateStandaloneDistribution" BeforeTargets="PrepareForBuild"
+          Condition="'$(RUOKStandalone)' == 'true'">
+    <Error Condition="!Exists('$(RUOKSupportPath)\Microsoft.WindowsAppRuntime.Insights.Resource.dll') or !Exists('$(RUOKNoticesPath)\INDEX.txt')"
+           Text="Build the standalone distribution with scripts\Publish-Standalone.ps1 so runtime resources and license notices are included." />
+  </Target>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />

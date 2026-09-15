@@ -14,6 +14,7 @@
   <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
     <Content Include="..\..\src\RUOK.App\Resources\UiStrings.resx" Link="UiStrings.resx" CopyToOutputDirectory="PreserveNewest" />
+    <Compile Include="..\..\src\RUOK.App\AppRuntime.cs" Link="AppRuntime.cs" />
   </ItemGroup>
 
   <ItemGroup>

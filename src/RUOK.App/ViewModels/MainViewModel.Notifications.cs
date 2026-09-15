@@ -20,6 +20,8 @@ public sealed partial class MainViewModel
     private bool _reminderWeekdays = true;
     private bool _keepInTray = true;
     private DateTimeOffset _retryNotificationsAfter;
+    private DateTimeOffset _nextNotificationAllowedUtc;
+    private bool _checkingReminders;
     private string _notificationStatus = "";
 
     private void InitializeNotifications(WindowsNotifications notifications)
@@ -53,7 +55,9 @@ public sealed partial class MainViewModel
     public bool ReminderWeekdays { get => _reminderWeekdays; set => SetProperty(ref _reminderWeekdays, value); }
     public bool KeepInTray { get => _keepInTray; set => SetProperty(ref _keepInTray, value); }
     public string NotificationStatus { get => _notificationStatus; private set => SetProperty(ref _notificationStatus, value); }
-    public bool ShouldStayInTray => IsReady && _settings.Notifications.Mode != ReminderMode.Disabled && _settings.Notifications.KeepInTray;
+    public bool HasScheduledNotifications => _settings.Notifications.Mode != ReminderMode.Disabled
+        || _encouragementReady && _encouragementState.Preferences.Enabled;
+    public bool ShouldStayInTray => IsReady && _settings.Notifications.KeepInTray && HasScheduledNotifications;
 
     private void ApplyNotificationSettings()
     {
@@ -103,6 +107,8 @@ public sealed partial class MainViewModel
     private Task TestNotificationAsync() => RunAsync(_ =>
     {
         // A test exercises native rendering and activation, but can never perform a notification save.
+        if (_encouragementState.Preferences.Enabled)
+            _nextNotificationAllowedUtc = _clock.GetUtcNow().AddMinutes(1);
         _notifications.Show(_settings.Notifications, _clock.GetUtcNow(), isTest: true);
         RefreshNotificationStatus();
         ShowStatus(UiText.Get("TestNotificationSent"));
@@ -110,6 +116,23 @@ public sealed partial class MainViewModel
     });
 
     public async Task CheckReminderAsync()
+    {
+        if (_checkingReminders || !CanUseData || _clock.GetUtcNow() < _nextNotificationAllowedUtc)
+            return;
+        _checkingReminders = true;
+        try
+        {
+            await CheckPulseReminderAsync();
+            if (_clock.GetUtcNow() >= _nextNotificationAllowedUtc)
+                await CheckEncouragementAsync();
+        }
+        finally
+        {
+            _checkingReminders = false;
+        }
+    }
+
+    private async Task CheckPulseReminderAsync()
     {
         if (!CanUseData || _settings.Notifications.Mode == ReminderMode.Disabled)
             return;
@@ -136,6 +159,8 @@ public sealed partial class MainViewModel
         {
             // Back off on delivery/persistence failure instead of repeatedly prompting.
             _retryNotificationsAfter = now.AddMinutes(5);
+            if (_encouragementState.Preferences.Enabled)
+                _nextNotificationAllowedUtc = now.AddMinutes(1);
             _notifications.Show(_settings.Notifications, now, isTest: false);
             _settings = await _service.MarkReminderSentAsync(now, token);
             _retryNotificationsAfter = default;
@@ -156,6 +181,12 @@ public sealed partial class MainViewModel
             if (outcome == NotificationOutcome.Expired)
             {
                 ShowStatus(UiText.Get("NotificationExpired"));
+                showWindow = true;
+            }
+            else if (outcome == NotificationOutcome.Encouragement)
+            {
+                NavigationRequested?.Invoke(Screen.Dashboard);
+                ShowStatus(UiText.Get("EncouragementOpened"));
                 showWindow = true;
             }
             else if (outcome == NotificationOutcome.Skip)
@@ -196,7 +227,10 @@ public sealed partial class MainViewModel
                 showWindow = true;
             }
             _handledNotifications.Add(intent.Id);
-            await _notifications.RemoveAsync(intent.IsTest);
+            if (intent.Action == NotificationAction.Encouragement)
+                await _notifications.RemoveEncouragementAsync(intent.IsTest);
+            else
+                await _notifications.RemoveAsync(intent.IsTest);
         });
         return showWindow || StatusSeverity == Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error;
     }

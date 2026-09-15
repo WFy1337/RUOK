@@ -10,6 +10,7 @@ namespace RUOK_App.Services;
 public sealed class WindowsNotifications
 {
     public const string Group = "RUOK.CheckIn";
+    public const string EncouragementGroup = "RUOK.Encourage";
     private bool _registered;
     public string? RegistrationError { get; private set; }
     public bool IsRegistered => _registered;
@@ -18,10 +19,11 @@ public sealed class WindowsNotifications
     {
         try
         {
+            AppRuntime.EnsureNotificationResources();
             AppNotificationManager.Default.Register();
             _registered = true;
         }
-        catch (Exception error) when (error is COMException or UnauthorizedAccessException)
+        catch (Exception error) when (error is COMException or UnauthorizedAccessException or DllNotFoundException or BadImageFormatException)
         {
             RegistrationError = UiText.Format("NotificationRegistrationError", $"0x{error.HResult:X8}");
         }
@@ -43,11 +45,7 @@ public sealed class WindowsNotifications
 
     public void Show(NotificationPreferences preferences, DateTimeOffset now, bool isTest)
     {
-        if (!_registered)
-            throw new NotificationDeliveryException(RegistrationError ?? UiText.Get("NotificationUnavailable"));
-        if (AppNotificationManager.Default.Setting != AppNotificationSetting.Enabled)
-            throw new NotificationDeliveryException(UiText.Get("NotificationBlocked"));
-
+        EnsureAvailable();
         var layout = preferences.Layout == NotificationLayout.Faces && !AppNotificationButton.IsToolTipSupported()
             ? NotificationLayout.SurveyAndSkip : preferences.Layout;
         var bodyKey = isTest ? "NotificationTestBody"
@@ -57,12 +55,41 @@ public sealed class WindowsNotifications
             UiText.Get(bodyKey), UiText.Get("TakeSurvey"), UiText.Get("Skip"),
             Enumerable.Range(1, 5).Select(score => UiText.Format("MoodAccessible", UiText.Get($"Mood{score}"), score)).ToArray());
         var intent = new NotificationIntent(Guid.NewGuid(), now, NotificationAction.Open, null, isTest);
-        var toast = new AppNotification(NotificationPayload.Create(intent, layout, text))
+        var imageUris = AppRuntime.IsPackaged ? null : Enumerable.Range(1, 5)
+            .Select(score => AppRuntime.AssetUri("NotificationFaces", $"Mood{score}.png").AbsoluteUri).ToArray();
+        var toast = new AppNotification(NotificationPayload.Create(intent, layout, text, imageUris))
         {
             Group = Group,
             Tag = isTest ? "test" : "reminder",
             Expiration = now.AddHours(24)
         };
+        Deliver(toast);
+    }
+
+    public void ShowEncouragement(string message, DateTimeOffset now, bool isTest)
+    {
+        EnsureAvailable();
+        var intent = new NotificationIntent(Guid.NewGuid(), now, NotificationAction.Encouragement, null, isTest);
+        var toast = new AppNotification(NotificationPayload.CreateEncouragement(intent,
+            UiText.Get(isTest ? "EncouragementPreviewTitle" : "EncouragementNotificationTitle"), message))
+        {
+            Group = EncouragementGroup,
+            Tag = isTest ? "test" : "message",
+            Expiration = now.AddHours(1)
+        };
+        Deliver(toast);
+    }
+
+    public void EnsureAvailable()
+    {
+        if (!_registered)
+            throw new NotificationDeliveryException(RegistrationError ?? UiText.Get("NotificationUnavailable"));
+        if (AppNotificationManager.Default.Setting != AppNotificationSetting.Enabled)
+            throw new NotificationDeliveryException(UiText.Get("NotificationBlocked"));
+    }
+
+    private static void Deliver(AppNotification toast)
+    {
         try
         {
             AppNotificationManager.Default.Show(toast);
@@ -85,6 +112,18 @@ public sealed class WindowsNotifications
     {
         if (_registered)
             await AppNotificationManager.Default.RemoveByTagAndGroupAsync(isTest ? "test" : "reminder", Group);
+    }
+
+    public async Task ClearEncouragementsAsync()
+    {
+        if (_registered)
+            await AppNotificationManager.Default.RemoveByGroupAsync(EncouragementGroup);
+    }
+
+    public async Task RemoveEncouragementAsync(bool isTest)
+    {
+        if (_registered)
+            await AppNotificationManager.Default.RemoveByTagAndGroupAsync(isTest ? "test" : "message", EncouragementGroup);
     }
 
     public static TimeSpan GetIdleTime()

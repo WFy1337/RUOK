@@ -52,13 +52,15 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
 
     public MainViewModel(
         WellbeingService service, ICsvExporter exporter, IUserDialogs dialogs,
-        TimeProvider clock, TimeZoneInfo zone, string dataLocation, WindowsNotifications notifications)
+        TimeProvider clock, TimeZoneInfo zone, string dataLocation, WindowsNotifications notifications,
+        EncouragementService encouragementService)
     {
         _service = service;
         _exporter = exporter;
         _dialogs = dialogs;
         _clock = clock;
         _zone = zone;
+        _encouragementService = encouragementService;
         DataLocation = dataLocation;
         MoodOptions = Enum.GetValues<Mood>().Select(mood => new MoodOption(mood)).ToArray();
         Factors = Enum.GetValues<ContextFactor>().Select(factor => new FactorOption(factor)).ToArray();
@@ -104,6 +106,7 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
         OpenBreathingCommand = new RelayCommand(() => NavigationRequested?.Invoke(Screen.Breathing));
         OpenPrivacyCommand = new RelayCommand(() => NavigationRequested?.Invoke(Screen.Settings));
         InitializeNotifications(notifications);
+        InitializeEncouragements();
     }
 
     public event Action<Screen>? NavigationRequested;
@@ -167,12 +170,14 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
     {
         ApplySnapshot(await _service.InitializeAsync(token));
         IsReady = true;
+        await LoadEncouragementsAsync(token);
     });
 
     private Task RefreshAsync() => RunAsync(async token =>
     {
         ApplySnapshot(await _service.InitializeAsync(token));
         IsReady = true;
+        await LoadEncouragementsAsync(token);
         ShowStatus(UiText.Get("Refreshed"));
     });
 
@@ -301,6 +306,11 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
         ResetDraft();
         ApplySnapshot(await _service.RefreshAsync(token));
         await _notifications.ClearAsync();
+        await LoadEncouragementsAsync(token);
+        await _notifications.ClearEncouragementsAsync();
+        _lastEncouragementPreview = null;
+        _retryEncouragementsAfter = default;
+        _nextNotificationAllowedUtc = default;
         _activityGate.Reset();
         IsReady = true;
         ShowStatus(UiText.Get("ResetDone"));
@@ -467,6 +477,7 @@ public sealed partial class MainViewModel : ObservableObject, IDisposable
     private void NotifyAvailability()
     {
         OnPropertyChanged(nameof(CanUseData));
+        OnPropertyChanged(nameof(CanUseEncouragements));
         OnPropertyChanged(nameof(NeedsPrivacyAcceptance));
         foreach (var command in _commands)
             command.NotifyCanExecuteChanged();

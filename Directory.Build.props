@@ -3,4 +3,16 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(RUOKStandalone)' == 'true'">
+    <BaseOutputPath>bin\Standalone\</BaseOutputPath>
+    <BaseIntermediateOutputPath>obj\Standalone\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(MSBuildProjectDirectory)\obj\Standalone\</MSBuildProjectExtensionsPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildProjectDirectory)\bin\**;$(MSBuildProjectDirectory)\obj\**</DefaultItemExcludes>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(RUOKStandalone)' == 'true' and '$(MSBuildProjectName)' == 'RUOK.App'">
+    <NuGetLockFilePath>$(MSBuildProjectDirectory)\packages.standalone.lock.json</NuGetLockFilePath>
+  </PropertyGroup>
 </Project>

@@ -20,6 +20,7 @@
 *.p12
 exports/
 backups/
+artifacts/
 
 # Local diagnostics, agent state, and signing secrets
 .scratch/
